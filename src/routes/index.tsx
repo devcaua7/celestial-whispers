@@ -45,11 +45,9 @@ function Index() {
 
   // Ao completar as 12, convida para a última estrela.
   useEffect(() => {
-    if (!entered || !isComplete || activeId !== null) return;
-    if (finalStage === "hidden") {
-      const t = window.setTimeout(() => setFinalStage("invite"), 1200);
-      return () => window.clearTimeout(t);
-    }
+    if (!entered || !isComplete || activeId !== null || finalStage !== "hidden") return undefined;
+    const t = window.setTimeout(() => setFinalStage("invite"), 1200);
+    return () => window.clearTimeout(t);
   }, [entered, isComplete, activeId, finalStage]);
 
   const openStar = useCallback(

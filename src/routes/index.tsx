@@ -93,7 +93,7 @@ function Index() {
       </div>
 
       {/* HUD */}
-      {entered && (
+      {entered && finalStage !== "reveal" && (
         <>
           <div className="pointer-events-none fixed inset-x-0 top-0 z-30 flex items-start justify-between gap-4 px-5 pt-6 sm:px-8">
             <div className="min-w-0">

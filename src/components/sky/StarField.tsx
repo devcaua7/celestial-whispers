@@ -52,7 +52,7 @@ export function StarField({ brightness = 0 }: Props) {
         x: Math.random() * w,
         y: Math.random() * h,
         z: Math.random() * w,
-        color: starColors[Math.floor(Math.random() * starColors.length)],
+        color: starColors[Math.floor(Math.random() * starColors.length)]!,
         tw: Math.random() * Math.PI * 2,
         sp: 0.5 + Math.random() * 1.2,
       }));

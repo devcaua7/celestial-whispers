@@ -134,6 +134,7 @@ function Index() {
             <MusicPlayer />
           </div>
 
+          {count === 0 && (
           <motion.p
             className="pointer-events-none fixed bottom-8 left-5 z-30 max-w-[55%] text-[0.62rem] uppercase tracking-[0.3em] text-muted-foreground/80 sm:left-8"
             initial={{ opacity: 0 }}
@@ -142,6 +143,7 @@ function Index() {
           >
             Explore o céu. Toque nas estrelas que brilham.
           </motion.p>
+          )}
         </>
       )}
 

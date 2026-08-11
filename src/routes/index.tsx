@@ -131,6 +131,11 @@ function Index() {
         onDiscover={() => setFinalStage("star")}
         onOpenFinal={() => setFinalStage("reveal")}
         onCloseReveal={() => setFinalStage("star")}
+        onRestart={() => {
+          setFinalStage("hidden");
+          setActiveId(null);
+          setEntered(false);
+        }}
       />
 
       <AnimatePresence>{!entered && <Intro onEnter={() => setEntered(true)} />}</AnimatePresence>

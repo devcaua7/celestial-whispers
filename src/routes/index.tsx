@@ -105,7 +105,7 @@ function Index() {
           </div>
 
           {/* Ações discretas: recomeçar / abrir a última estrela */}
-          <div className="fixed bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2">
+          <div className="fixed bottom-20 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 sm:bottom-6">
             {finalStage === "dismissed" && (
               <button
                 type="button"

@@ -31,13 +31,13 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type FinalStage = "hidden" | "invite" | "star" | "reveal";
+type FinalStage = "hidden" | "invite" | "dismissed" | "star" | "reveal";
 
 function Index() {
   const [entered, setEntered] = useState(false);
   const [activeId, setActiveId] = useState<number | null>(null);
   const [finalStage, setFinalStage] = useState<FinalStage>("hidden");
-  const { discovered, discover, has, count, total, isComplete, hydrated } = useDiscoveredStars(
+  const { discovered, discover, has, count, total, isComplete, hydrated, reset } = useDiscoveredStars(
     stars.length,
   );
 
@@ -104,6 +104,32 @@ function Index() {
             </div>
           </div>
 
+          {/* Ações discretas: recomeçar / abrir a última estrela */}
+          <div className="fixed bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2">
+            {finalStage === "dismissed" && (
+              <button
+                type="button"
+                onClick={() => setFinalStage("star")}
+                className="min-h-10 rounded-full bg-star/10 px-5 py-2 text-[0.6rem] uppercase tracking-[0.28em] text-star ring-1 ring-star/40 backdrop-blur-md transition-colors hover:bg-star/20"
+              >
+                A última estrela
+              </button>
+            )}
+            {count > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  reset();
+                  setActiveId(null);
+                  setFinalStage("hidden");
+                }}
+                className="min-h-10 rounded-full border border-border/70 bg-panel/60 px-5 py-2 text-[0.6rem] uppercase tracking-[0.28em] text-muted-foreground backdrop-blur-md transition-colors hover:border-star/50 hover:text-foreground"
+              >
+                Recomeçar
+              </button>
+            )}
+          </div>
+
           <div className="fixed bottom-6 right-5 z-30 sm:right-8">
             <MusicPlayer />
           </div>
@@ -129,6 +155,7 @@ function Index() {
       <FinalStar
         stage={finalStage}
         onDiscover={() => setFinalStage("star")}
+        onDismiss={() => setFinalStage("dismissed")}
         onOpenFinal={() => setFinalStage("reveal")}
         onCloseReveal={() => setFinalStage("star")}
         onRestart={() => {

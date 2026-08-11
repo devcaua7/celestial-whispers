@@ -4,15 +4,23 @@ import { completion, finalStar } from "@/data/stars";
 import { StarShape } from "./StarShape";
 
 type Props = {
-  /** "hidden" | "invite" (12/12) | "star" (estrela final no céu) | "reveal" */
-  stage: "hidden" | "invite" | "star" | "reveal";
+  /** "hidden" | "invite" (12/12) | "dismissed" | "star" (estrela final no céu) | "reveal" */
+  stage: "hidden" | "invite" | "dismissed" | "star" | "reveal";
   onDiscover: () => void;
+  onDismiss: () => void;
   onOpenFinal: () => void;
   onCloseReveal: () => void;
   onRestart: () => void;
 };
 
-export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal, onRestart }: Props) {
+export function FinalStar({
+  stage,
+  onDiscover,
+  onDismiss,
+  onOpenFinal,
+  onCloseReveal,
+  onRestart,
+}: Props) {
   const [line, setLine] = useState(0);
 
   useEffect(() => {
@@ -66,6 +74,15 @@ export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal, onRes
               >
                 {completion.cta}
               </button>
+              <div>
+                <button
+                  type="button"
+                  onClick={onDismiss}
+                  className="mt-5 min-h-11 px-4 text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Continuar explorando
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}

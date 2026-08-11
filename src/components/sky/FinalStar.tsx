@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { completion, finalStar } from "@/data/stars";
+import { StarShape } from "./StarShape";
 
 type Props = {
   /** "hidden" | "invite" (12/12) | "star" (estrela final no céu) | "reveal" */
@@ -8,9 +9,10 @@ type Props = {
   onDiscover: () => void;
   onOpenFinal: () => void;
   onCloseReveal: () => void;
+  onRestart: () => void;
 };
 
-export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal }: Props) {
+export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal, onRestart }: Props) {
   const [line, setLine] = useState(0);
 
   useEffect(() => {
@@ -45,10 +47,12 @@ export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal }: Pro
             >
               <motion.span
                 aria-hidden
-                className="mx-auto mb-8 block h-2.5 w-2.5 rounded-full bg-star shadow-star"
-                animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
+                className="mx-auto mb-8 block w-fit"
+                animate={{ scale: [1, 1.35, 1], opacity: [0.7, 1, 0.7], rotate: [0, 12, 0] }}
                 transition={{ duration: 2.6, repeat: Infinity }}
-              />
+              >
+                <StarShape points={4} className="h-7 w-7 text-star drop-shadow-[0_0_14px_var(--star)]" />
+              </motion.span>
               <h2 className="font-display text-2xl text-foreground sm:text-3xl">
                 {completion.title}
               </h2>
@@ -89,10 +93,18 @@ export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal }: Pro
               />
               <motion.span
                 aria-hidden
-                className="relative block h-4 w-4 rounded-full bg-star shadow-star"
-                animate={{ scale: [1, 1.15, 1] }}
-                transition={{ duration: 2.4, repeat: Infinity }}
-              />
+                className="relative block"
+                animate={{ scale: [1, 1.12, 1], rotate: [0, 360] }}
+                transition={{
+                  scale: { duration: 2.4, repeat: Infinity },
+                  rotate: { duration: 90, repeat: Infinity, ease: "linear" },
+                }}
+              >
+                <StarShape
+                  points={5}
+                  className="h-12 w-12 text-star drop-shadow-[0_0_18px_var(--star)]"
+                />
+              </motion.span>
             </span>
             <motion.span
               className="absolute left-1/2 top-full mt-4 -translate-x-1/2 whitespace-nowrap text-[0.6rem] uppercase tracking-[0.35em] text-star/70"
@@ -118,10 +130,12 @@ export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal }: Pro
             <div className="absolute inset-0 bg-void/95" />
             <motion.span
               aria-hidden
-              className="relative mb-12 block h-3 w-3 rounded-full bg-star shadow-star"
-              animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }}
+              className="relative mb-12 block"
+              animate={{ scale: [1, 1.25, 1], opacity: [0.7, 1, 0.7], rotate: [0, 10, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
-            />
+            >
+              <StarShape points={5} className="h-9 w-9 text-star drop-shadow-[0_0_16px_var(--star)]" />
+            </motion.span>
             <div className="relative flex max-w-xl flex-col gap-6">
               {finalStar.lines.slice(0, line).map((text, i) => (
                 <motion.p
@@ -151,13 +165,22 @@ export function FinalStar({ stage, onDiscover, onOpenFinal, onCloseReveal }: Pro
                     {finalStar.signature}
                   </p>
                 )}
-                <button
-                  type="button"
-                  onClick={onCloseReveal}
-                  className="min-h-11 rounded-full border border-border px-7 py-2.5 text-xs uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-star/50 hover:text-foreground"
-                >
-                  Voltar ao céu
-                </button>
+                <div className="flex flex-col items-center gap-3 sm:flex-row">
+                  <button
+                    type="button"
+                    onClick={onCloseReveal}
+                    className="min-h-11 rounded-full border border-border px-7 py-2.5 text-xs uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:border-star/50 hover:text-foreground"
+                  >
+                    Voltar ao céu
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onRestart}
+                    className="min-h-11 rounded-full bg-star/10 px-7 py-2.5 text-xs uppercase tracking-[0.25em] text-star ring-1 ring-star/40 transition-colors hover:bg-star/20"
+                  >
+                    Voltar ao início
+                  </button>
+                </div>
               </motion.div>
             )}
           </motion.div>

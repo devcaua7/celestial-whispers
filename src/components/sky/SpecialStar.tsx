@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import type { SpecialStar as SpecialStarData } from "@/data/stars";
+import { StarShape } from "./StarShape";
 
 type Props = {
   star: SpecialStarData;
@@ -36,14 +37,19 @@ export function SpecialStar({ star, index, discovered, active, onSelect }: Props
         />
         <motion.span
           aria-hidden
-          className={`relative block rounded-full ${
-            discovered
-              ? "h-2 w-2 bg-star-soft shadow-star-soft"
-              : "h-2.5 w-2.5 bg-star shadow-star"
-          }`}
-          animate={{ opacity: [0.75, 1, 0.75] }}
+          className="relative block"
+          animate={{ opacity: [0.75, 1, 0.75], rotate: discovered ? 0 : [0, 8, 0] }}
           transition={{ duration: 2.4 + (index % 5) * 0.35, repeat: Infinity }}
-        />
+        >
+          <StarShape
+            points={index % 3 === 0 ? 5 : 4}
+            className={
+              discovered
+                ? "h-5 w-5 text-star-soft drop-shadow-[0_0_8px_var(--star-soft)] sm:h-4 sm:w-4"
+                : "h-7 w-7 text-star drop-shadow-[0_0_10px_var(--star)] sm:h-6 sm:w-6"
+            }
+          />
+        </motion.span>
         {discovered && (
           <span
             aria-hidden

@@ -132,7 +132,7 @@ function Index() {
           </div>
 
           <div className="fixed bottom-6 right-5 z-30 sm:right-8">
-            <MusicPlayer />
+            <MusicPlayer playTrigger={musicTrigger} />
           </div>
 
           {count === 0 && (

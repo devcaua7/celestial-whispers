@@ -37,6 +37,7 @@ function Index() {
   const [entered, setEntered] = useState(false);
   const [activeId, setActiveId] = useState<number | null>(null);
   const [finalStage, setFinalStage] = useState<FinalStage>("hidden");
+  const [musicTrigger, setMusicTrigger] = useState(0);
   const { discovered, discover, has, count, total, isComplete, hydrated, reset } = useDiscoveredStars(
     stars.length,
   );

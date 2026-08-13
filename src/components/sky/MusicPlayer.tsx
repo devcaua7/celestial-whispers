@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Music, Pause, Play, Upload, Volume1, Volume2, VolumeX } from "lucide-react";
 import { config } from "@/data/stars";
 
-export function MusicPlayer() {
+export function MusicPlayer({ playTrigger }: { playTrigger?: number }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -19,6 +19,14 @@ export function MusicPlayer() {
     el.volume = muted ? 0 : volume;
     el.muted = muted;
   }, [volume, muted]);
+
+  useEffect(() => {
+    if (playTrigger === undefined || playTrigger === 0) return;
+    const el = audioRef.current;
+    if (!el) return;
+    el.volume = muted ? 0 : volume;
+    void el.play().then(() => setPlaying(true)).catch(() => undefined);
+  }, [playTrigger]);
 
   const play = async () => {
     const el = audioRef.current;

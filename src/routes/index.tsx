@@ -37,6 +37,7 @@ function Index() {
   const [entered, setEntered] = useState(false);
   const [activeId, setActiveId] = useState<number | null>(null);
   const [finalStage, setFinalStage] = useState<FinalStage>("hidden");
+  const [musicTrigger, setMusicTrigger] = useState(0);
   const { discovered, discover, has, count, total, isComplete, hydrated, reset } = useDiscoveredStars(
     stars.length,
   );
@@ -131,7 +132,7 @@ function Index() {
           </div>
 
           <div className="fixed bottom-6 right-5 z-30 sm:right-8">
-            <MusicPlayer />
+            <MusicPlayer playTrigger={musicTrigger} />
           </div>
 
           {count === 0 && (
@@ -167,7 +168,16 @@ function Index() {
         }}
       />
 
-      <AnimatePresence>{!entered && <Intro onEnter={() => setEntered(true)} />}</AnimatePresence>
+      <AnimatePresence>
+        {!entered && (
+          <Intro
+            onEnter={() => {
+              setEntered(true);
+              setMusicTrigger((n) => n + 1);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </main>
   );
 }

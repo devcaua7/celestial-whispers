@@ -168,7 +168,16 @@ function Index() {
         }}
       />
 
-      <AnimatePresence>{!entered && <Intro onEnter={() => setEntered(true)} />}</AnimatePresence>
+      <AnimatePresence>
+        {!entered && (
+          <Intro
+            onEnter={() => {
+              setEntered(true);
+              setMusicTrigger((n) => n + 1);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </main>
   );
 }
